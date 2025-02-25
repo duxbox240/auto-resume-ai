@@ -1,0 +1,86 @@
+Objective:
+Design a modern, elegant, and highly professional CV template with a clean layout, well-structured sections, and a visually appealing design. The CV should look premium and suitable for all industries, including corporate, tech, creative, and executive roles.
+
+💡 Design Specifications
+1️⃣ Layout & Structure
+
+Two-column layout for better readability
+Left Sidebar (For Personal Info, Skills, Contact)
+Main Content (Right Side) (Experience, Education, Projects)
+Proper use of white space to avoid clutter
+Professional-looking icons and dividers for separation
+Balanced margins & alignment for a sleek finish
+2️⃣ Typography
+
+Professional fonts (Sans-serif like Montserrat, Poppins, or Lato)
+Headings: Bold & slightly larger (e.g., 18-22px)
+Body Text: Readable & minimal (12-14px)
+Proper line height (1.5x for easy reading)
+Use consistent font weight for a premium look
+3️⃣ Color Scheme
+
+Primary Colors: Elegant & modern (Navy Blue, Dark Gray, or Teal)
+Accent Colors: Gold, Light Blue, or Soft Green for highlights
+Text Color: Dark Gray or Black for readability
+Background: Light Gray or White for a clean look
+4️⃣ Sections & Styling
+
+🔹Header Section (Top Part)
+✅ Large Name & Job Title (Bold & well-spaced)
+✅ Professional Profile Photo (Optional, Circular Shape)
+✅ Short Professional Summary (1-2 lines, italic or subtle color)
+
+🔹Left Sidebar (Minimal & Icon-based)
+✅ Contact Info: Phone, Email, LinkedIn, Website (icons)
+✅ Skills Section: Bullet points with skill level (bar or dot format)
+✅ Languages: Flags or bullet format
+✅ Certifications & Awards: Subtle icons & spacing
+
+🔹Right Main Content (Detailed & Readable)
+✅ Experience Section:
+
+Job Titles (Bold, 16px+)
+Company Name & Duration (Smaller text, italic or gray color)
+Bullet Points (Max 4 per job, professional & quantified)
+✅ Education Section:
+
+Degree Name (Bold & larger font)
+University & Year (Smaller & grayish color)
+Short description (if applicable)
+✅ Projects & Achievements:
+
+Bullet points with GitHub/Portfolio Links (if applicable)
+✅ Professional Summary (Optional but recommended)
+
+Short, 2-3 sentence summary
+Can be AI-generated for impact
+🔹Footer (Optional, But Premium Look)
+✅ QR Code to LinkedIn Profile or Digital Resume
+✅ Subtle divider or line at the bottom
+
+🎨 Advanced Enhancements for a Premium Look
+✅ Minimal Icons for sections (Job, Degree, Skills)
+✅ Subtle Gradient or Border Effects for sophistication
+✅ Hover Effects (if digital version)
+✅ AI-driven skill match visualization (if applicable)
+
+🛠️ Design Tools to Use
+🔹 Figma (Best for Customization & UX Design)
+🔹 Canva Pro (Easy Drag & Drop for clean design)
+🔹 Adobe Illustrator (For pixel-perfect vector design)
+🔹 Word / Google Docs (If simple & widely accessible)
+
+Final Touch: Make It Interactive & Downloadable
+🔹 Save in PDF, PNG, or Interactive HTML
+🔹 Ensure A4 Format (210 × 297 mm) for printing
+🔹 Optimize file size for quick download
+
+📝 Bonus Features for AI Resume Builder
+If you’re integrating this CV template into your AI Resume Builder, ensure that:
+✅ AI auto-fills sections based on user input
+✅ Users can customize colors, fonts, & layouts
+✅ Auto-adjust sections based on content length
+✅ One-click PDF export & print optimization
+
+🎯 End Goal:
+A modern, high-quality, ATS-friendly CV design that looks premium, enhances user experience, and helps candidates stand out in job applications.

@@ -58,7 +58,7 @@ export default function HomePage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Last updated: {new Date(resume.updatedAt).toLocaleDateString()}
+                      Last updated: {new Date(resume.updatedAt!).toLocaleDateString()}
                     </p>
                     <div className="flex space-x-2">
                       <Button variant="outline" className="flex-1" asChild>

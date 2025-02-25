@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useToast } from "@/hooks/use-toast"; // Fixed import path
+import { useToast } from "@/hooks/use-toast";
 
 export default function ResumeForm({
   defaultValues,
@@ -68,12 +68,12 @@ export default function ResumeForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <h3 className="text-xl font-semibold mb-4">Personal Details</h3>
             <div className="mb-6">
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
                 <Avatar className="w-24 h-24">
                   <AvatarImage
                     src={form.watch("personalDetails.profilePicture")}
@@ -83,7 +83,7 @@ export default function ResumeForm({
                     {form.watch("personalDetails.fullName")?.charAt(0) || "?"}
                   </AvatarFallback>
                 </Avatar>
-                <div>
+                <div className="w-full">
                   <FormLabel>Profile Picture (Optional)</FormLabel>
                   <Input
                     type="file"
@@ -104,7 +104,7 @@ export default function ResumeForm({
                       <Textarea
                         {...field}
                         placeholder="Write a compelling summary of your professional background and goals..."
-                        className="min-h-[100px]"
+                        className="min-h-[100px] text-base sm:text-sm"
                       />
                     </FormControl>
                     <FormMessage />
@@ -113,7 +113,7 @@ export default function ResumeForm({
               />
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               <FormField
                 control={form.control}
                 name="personalDetails.fullName"
@@ -121,7 +121,7 @@ export default function ResumeForm({
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className="text-base sm:text-sm" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -134,7 +134,7 @@ export default function ResumeForm({
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" {...field} />
+                      <Input type="email" {...field} className="text-base sm:text-sm" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -147,7 +147,7 @@ export default function ResumeForm({
                   <FormItem>
                     <FormLabel>Phone</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className="text-base sm:text-sm" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -160,7 +160,7 @@ export default function ResumeForm({
                   <FormItem>
                     <FormLabel>Location</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className="text-base sm:text-sm" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -173,7 +173,7 @@ export default function ResumeForm({
                   <FormItem>
                     <FormLabel>LinkedIn (Optional)</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className="text-base sm:text-sm" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -184,7 +184,7 @@ export default function ResumeForm({
         </Card>
 
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold">Work Experience</h3>
               <Button
@@ -231,7 +231,7 @@ export default function ResumeForm({
                   </Button>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <FormField
                     control={form.control}
                     name={`workExperience.${index}.title`}
@@ -239,7 +239,7 @@ export default function ResumeForm({
                       <FormItem>
                         <FormLabel>Job Title</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input {...field} className="text-base sm:text-sm" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -252,7 +252,7 @@ export default function ResumeForm({
                       <FormItem>
                         <FormLabel>Company</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input {...field} className="text-base sm:text-sm" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -265,7 +265,7 @@ export default function ResumeForm({
                       <FormItem>
                         <FormLabel>Start Date</FormLabel>
                         <FormControl>
-                          <Input {...field} type="month" />
+                          <Input {...field} type="month" className="text-base sm:text-sm" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -278,13 +278,13 @@ export default function ResumeForm({
                       <FormItem>
                         <FormLabel>End Date</FormLabel>
                         <FormControl>
-                          <Input {...field} type="month" />
+                          <Input {...field} type="month" className="text-base sm:text-sm" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <div className="md:col-span-2">
+                  <div className="sm:col-span-2">
                     <FormField
                       control={form.control}
                       name={`workExperience.${index}.description`}
@@ -292,7 +292,7 @@ export default function ResumeForm({
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
-                            <Textarea {...field} />
+                            <Textarea {...field} className="text-base sm:text-sm" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -306,7 +306,7 @@ export default function ResumeForm({
         </Card>
 
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold">Skills</h3>
               <Button
@@ -332,7 +332,11 @@ export default function ResumeForm({
                     render={({ field }) => (
                       <FormItem className="flex-1">
                         <FormControl>
-                          <Input {...field} placeholder="e.g. JavaScript, Project Management, etc." />
+                          <Input 
+                            {...field} 
+                            placeholder="e.g. JavaScript, Project Management, etc."
+                            className="text-base sm:text-sm"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -358,7 +362,11 @@ export default function ResumeForm({
           </CardContent>
         </Card>
 
-        <Button type="submit" disabled={isSubmitting} className="w-full">
+        <Button 
+          type="submit" 
+          disabled={isSubmitting} 
+          className="w-full text-base sm:text-sm py-6 sm:py-4"
+        >
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Save Resume
         </Button>

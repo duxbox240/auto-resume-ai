@@ -11,16 +11,16 @@ export default function DashboardNav() {
     <div className="flex flex-col h-full">
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold">AI Resume Builder</h2>
+          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">AI Resume Builder</h2>
           <div className="space-y-1">
             <Link href="/">
-              <Button variant="ghost" className="w-full justify-start">
+              <Button variant="ghost" className="w-full justify-start text-base sm:text-sm">
                 <FileText className="mr-2 h-4 w-4" />
                 My Resumes
               </Button>
             </Link>
             <Link href="/create">
-              <Button variant="ghost" className="w-full justify-start">
+              <Button variant="ghost" className="w-full justify-start text-base sm:text-sm">
                 <Plus className="mr-2 h-4 w-4" />
                 Create New
               </Button>
@@ -33,7 +33,7 @@ export default function DashboardNav() {
           onClick={() => logoutMutation.mutate()}
           disabled={logoutMutation.isPending}
           variant="outline"
-          className="w-full"
+          className="w-full text-base sm:text-sm"
         >
           {logoutMutation.isPending ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -51,11 +51,11 @@ export default function DashboardNav() {
       {/* Mobile Navigation */}
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" className="lg:hidden">
+          <Button variant="outline" className="lg:hidden fixed top-4 left-4 z-40">
             <Menu className="h-4 w-4" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-64">
+        <SheetContent side="left" className="w-64 p-0">
           <NavContent />
         </SheetContent>
       </Sheet>

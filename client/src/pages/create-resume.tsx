@@ -21,6 +21,10 @@ export default function CreateResume() {
   const createResumeMutation = useMutation({
     mutationFn: async (data: { title: string; template: string; content: ResumeContent }) => {
       const res = await apiRequest("POST", "/api/resumes", data);
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(error || "Failed to create resume");
+      }
       return res.json();
     },
     onSuccess: () => {
@@ -31,12 +35,19 @@ export default function CreateResume() {
       });
       setLocation("/");
     },
+    onError: (error: Error) => {
+      toast({
+        title: "Failed to save resume",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
   });
 
   return (
     <div className="min-h-screen">
       <DashboardNav />
-      
+
       <main className="lg:pl-64">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
@@ -60,7 +71,7 @@ export default function CreateResume() {
                     placeholder="e.g. Software Developer Resume"
                   />
                 </div>
-                
+
                 <ResumeTemplates
                   value={template}
                   onChange={setTemplate}

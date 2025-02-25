@@ -30,6 +30,8 @@ export const resumeContentSchema = z.object({
     phone: z.string(),
     location: z.string(),
     linkedin: z.string().optional(),
+    profilePicture: z.string().optional(), // Base64 encoded image
+    summary: z.string(),
   }),
   workExperience: z.array(z.object({
     title: z.string(),

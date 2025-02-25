@@ -13,10 +13,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2, Wand2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function ResumeForm({
   defaultValues,
@@ -37,6 +38,8 @@ export default function ResumeForm({
         phone: "",
         location: "",
         linkedin: "",
+        profilePicture: "",
+        summary: "",
       },
       workExperience: [],
       education: [],
@@ -61,12 +64,109 @@ export default function ResumeForm({
     },
   });
 
+  const summarySuggestionMutation = useMutation({
+    mutationFn: async (data: { title: string; workExperience: ResumeContent["workExperience"] }) => {
+      const res = await apiRequest("POST", "/api/suggestions/summary", data);
+      return res.json();
+    },
+    onSuccess: (data) => {
+      form.setValue("personalDetails.summary", data.summary);
+      toast({
+        title: "Summary generated",
+        description: "AI has generated a professional summary based on your experience",
+      });
+    },
+  });
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        form.setValue("personalDetails.profilePicture", reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <Card>
           <CardContent className="p-6">
             <h3 className="text-xl font-semibold mb-4">Personal Details</h3>
+            <div className="mb-6">
+              <div className="flex items-center gap-4 mb-4">
+                <Avatar className="w-24 h-24">
+                  <AvatarImage
+                    src={form.watch("personalDetails.profilePicture")}
+                    alt="Profile"
+                  />
+                  <AvatarFallback>
+                    {form.watch("personalDetails.fullName")?.charAt(0) || "?"}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <FormLabel>Profile Picture (Optional)</FormLabel>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="mt-2"
+                  />
+                </div>
+              </div>
+
+              <FormField
+                control={form.control}
+                name="personalDetails.summary"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex justify-between items-center">
+                      <FormLabel>Professional Summary</FormLabel>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          if (form.watch("workExperience").length === 0) {
+                            toast({
+                              title: "Add work experience first",
+                              description: "Please add some work experience to generate a summary",
+                              variant: "destructive",
+                            });
+                            return;
+                          }
+                          summarySuggestionMutation.mutate({
+                            title: form.watch("personalDetails.fullName"),
+                            workExperience: form.watch("workExperience"),
+                          });
+                        }}
+                        disabled={summarySuggestionMutation.isPending}
+                      >
+                        {summarySuggestionMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <>
+                            <Wand2 className="h-4 w-4 mr-2" />
+                            Generate with AI
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Write a compelling summary of your professional background and goals..."
+                        className="min-h-[100px]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <div className="grid gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}

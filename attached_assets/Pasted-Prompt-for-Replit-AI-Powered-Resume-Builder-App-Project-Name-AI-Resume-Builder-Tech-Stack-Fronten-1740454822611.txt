@@ -1,0 +1,91 @@
+Prompt for Replit: AI-Powered Resume Builder App
+Project Name: AI Resume Builder
+Tech Stack:
+Frontend: React (Next.js preferred), Tailwind CSS for styling
+Backend: Node.js (Express.js) or Firebase (for authentication and storage)
+Database: MongoDB (via Mongoose) or Firebase Firestore
+Authentication: Firebase Auth (Google, Email/Password login)
+AI Features: OpenAI API or local NLP model for resume content suggestions
+Storage: Cloudinary (for resume PDFs/images)
+App Features (A-Z)
+1. User Authentication (Login & Signup)
+Allow users to register and log in using Email/Password or Google OAuth
+Firebase Authentication (or Supabase)
+Secure JWT-based session management
+Forgot Password / Reset Password option
+2. Dashboard (After Login)
+A clean and user-friendly dashboard
+Show saved resumes, recent activity, and profile details
+Dark Mode & Light Mode toggle
+Sidebar navigation with the following sections:
+Create Resume
+Saved Resumes
+AI Suggestions
+Profile & Settings
+3. Resume Creation Form
+Personal Details Section (Name, Contact, Address, LinkedIn, etc.)
+Work Experience Section (Job Title, Company, Duration, Responsibilities)
+Education Section (Degree, Institution, Year of Passing)
+Skills Section (Auto-suggest skills using AI)
+Projects Section (Title, Description, Technologies Used, Links)
+Certifications & Achievements Section
+Languages Spoken Section
+4. AI-Powered Resume Content Suggestions
+AI-generated professional summary
+AI-powered work experience descriptions
+AI-suggested skills based on industry
+Grammar and spell check on user input
+AI-powered "One-Click Resume Builder" for instant resume creation
+5. Resume Templates & Themes
+Multiple clean & professional resume templates
+Users can preview before selecting a template
+Customize colors, fonts, layouts
+Drag-and-drop section arrangement
+6. PDF Export & Sharing
+Generate high-quality PDF resumes
+Option to download or share resume via email
+QR Code Generation for easy resume sharing
+7. Resume Storage & Editing
+Users can save multiple resumes in the dashboard
+Edit/Delete existing resumes
+Auto-save feature while editing
+8. Profile & Settings
+Profile picture upload
+Edit personal information
+Change password
+Toggle between dark & light mode
+9. Mobile Responsive & SEO Optimized
+Fully mobile-friendly UI
+Fast-loading pages
+SEO-optimized for better Google search ranking
+10. Security & Performance Enhancements
+Rate Limiting to prevent spam
+Data encryption for security
+Cloud-based deployment (Vercel/Netlify for frontend, Firebase for backend)
+Development Roadmap
+Step 1: Setup Project
+Initialize React (Next.js) + Tailwind CSS
+Set up Firebase Authentication
+Create backend with Express.js (or Firebase Firestore)
+Step 2: Authentication System
+Implement Login / Signup (Google, Email/Password)
+Add JWT-based authentication
+Create dashboard page after login
+Step 3: Resume Builder Functionality
+Build step-by-step resume form
+Integrate AI suggestions using OpenAI API
+Create multiple resume templates
+Step 4: Export & Save Resume
+Implement PDF generation feature
+Add resume saving & editing functionality
+Add resume sharing via email & QR Code
+Step 5: UI Improvements & Mobile Responsiveness
+Make the UI sleek and professional
+Optimize for mobile & tablet screens
+Add Dark Mode Toggle
+Step 6: Deployment & Security
+Deploy frontend on Vercel/Netlify
+Deploy backend on Firebase Functions / Node.js Server
+Set up Cloudinary for file storage
+Final Notes
+Make sure the UI is minimal, elegant, and user-friendly with smooth animations. The app should feel premium and professional, similar to top-tier resume builders like Novoresume or Zety.

@@ -13,10 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Plus, Trash2, Wand2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function ResumeForm({
@@ -28,7 +25,6 @@ export default function ResumeForm({
   onSubmit: (data: ResumeContent) => void;
   isSubmitting: boolean;
 }) {
-  const { toast } = useToast();
   const form = useForm<ResumeContent>({
     resolver: zodResolver(resumeContentSchema),
     defaultValues: defaultValues || {
@@ -45,36 +41,6 @@ export default function ResumeForm({
       education: [],
       skills: [],
       projects: [],
-    },
-  });
-
-  const skillsSuggestionMutation = useMutation({
-    mutationFn: async (workExperience: ResumeContent["workExperience"]) => {
-      const res = await apiRequest("POST", "/api/suggestions/skills", {
-        workExperience,
-      });
-      return res.json();
-    },
-    onSuccess: (data) => {
-      form.setValue("skills", [...new Set([...form.getValues("skills"), ...data.skills])]);
-      toast({
-        title: "Skills suggested",
-        description: "AI has suggested skills based on your work experience",
-      });
-    },
-  });
-
-  const summarySuggestionMutation = useMutation({
-    mutationFn: async (data: { title: string; workExperience: ResumeContent["workExperience"] }) => {
-      const res = await apiRequest("POST", "/api/suggestions/summary", data);
-      return res.json();
-    },
-    onSuccess: (data) => {
-      form.setValue("personalDetails.summary", data.summary);
-      toast({
-        title: "Summary generated",
-        description: "AI has generated a professional summary based on your experience",
-      });
     },
   });
 
@@ -122,38 +88,7 @@ export default function ResumeForm({
                 name="personalDetails.summary"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex justify-between items-center">
-                      <FormLabel>Professional Summary</FormLabel>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          if (form.watch("workExperience").length === 0) {
-                            toast({
-                              title: "Add work experience first",
-                              description: "Please add some work experience to generate a summary",
-                              variant: "destructive",
-                            });
-                            return;
-                          }
-                          summarySuggestionMutation.mutate({
-                            title: form.watch("personalDetails.fullName"),
-                            workExperience: form.watch("workExperience"),
-                          });
-                        }}
-                        disabled={summarySuggestionMutation.isPending}
-                      >
-                        {summarySuggestionMutation.isPending ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <>
-                            <Wand2 className="h-4 w-4 mr-2" />
-                            Generate with AI
-                          </>
-                        )}
-                      </Button>
-                    </div>
+                    <FormLabel>Professional Summary</FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
@@ -356,25 +291,63 @@ export default function ResumeForm({
                 </div>
               </div>
             ))}
-
-            {form.watch("workExperience").length > 0 && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => skillsSuggestionMutation.mutate(form.getValues("workExperience"))}
-                disabled={skillsSuggestionMutation.isPending}
-              >
-                {skillsSuggestionMutation.isPending ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  "Suggest Skills with AI"
-                )}
-              </Button>
-            )}
           </CardContent>
         </Card>
 
-        <Button type="submit" disabled={isSubmitting}>
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Skills</h3>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const current = form.getValues("skills");
+                  form.setValue("skills", [...current, ""]);
+                }}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Skill
+              </Button>
+            </div>
+
+            <div className="grid gap-4">
+              {form.watch("skills").map((_, index) => (
+                <div key={index} className="flex gap-2">
+                  <FormField
+                    control={form.control}
+                    name={`skills.${index}`}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <Input {...field} placeholder="e.g. JavaScript, Project Management, etc." />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      const current = form.getValues("skills");
+                      form.setValue(
+                        "skills",
+                        current.filter((_, i) => i !== index)
+                      );
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Button type="submit" disabled={isSubmitting} className="w-full">
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Save Resume
         </Button>

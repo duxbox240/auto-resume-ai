@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useToast } from "@/hooks/use-toast"; // Fixed import path
 
 export default function ResumeForm({
   defaultValues,
@@ -25,6 +26,7 @@ export default function ResumeForm({
   onSubmit: (data: ResumeContent) => void;
   isSubmitting: boolean;
 }) {
+  const { toast } = useToast();
   const form = useForm<ResumeContent>({
     resolver: zodResolver(resumeContentSchema),
     defaultValues: defaultValues || {
@@ -47,6 +49,15 @@ export default function ResumeForm({
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        toast({
+          title: "File too large",
+          description: "Please select an image smaller than 5MB",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         form.setValue("personalDetails.profilePicture", reader.result as string);

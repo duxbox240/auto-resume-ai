@@ -169,7 +169,7 @@ export function ResumePDF({ content }: { content: ResumeContent }) {
           {/* Work Experience */}
           {content.workExperience.length > 0 && (
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Professional Experience</Text>
+              <Text style={styles.sectionTitle}>Experience</Text>
               {content.workExperience.map((exp, index) => (
                 <View key={index} style={styles.experienceItem}>
                   <Text style={styles.jobTitle}>{exp.title}</Text>

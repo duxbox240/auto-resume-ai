@@ -3,6 +3,34 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: 60 56% 97%; /* fefae0 */
+    --foreground: 40 47% 45%; /* d4a373 */
+
+    --muted: 73 41% 86%; /* e9edc9 */
+    --muted-foreground: 40 47% 45%; /* d4a373 */
+
+    --card: 60 56% 97%; /* fefae0 */
+    --card-foreground: 40 47% 45%; /* d4a373 */
+
+    --border: 82 31% 77%; /* ccd5ae */
+    --input: 82 31% 77%; /* ccd5ae */
+
+    --primary: 40 47% 45%; /* d4a373 */
+    --primary-foreground: 60 56% 97%; /* fefae0 */
+
+    --secondary: 48 56% 89%; /* faedcd */
+    --secondary-foreground: 40 47% 45%; /* d4a373 */
+
+    --accent: 82 31% 77%; /* ccd5ae */
+    --accent-foreground: 40 47% 45%; /* d4a373 */
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 60 56% 97%; /* fefae0 */
+
+    --ring: 40 47% 45%; /* d4a373 */
+  }
+
   * {
     @apply border-border;
   }

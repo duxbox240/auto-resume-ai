@@ -58,10 +58,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/suggestions/summary", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
 
-    const prompt = `Generate a professional summary based on the following work experience and skills. Make it concise and impactful:
-    
+    const prompt = `Create a compelling professional summary for a ${req.body.title} based on their work experience. Make it concise, impactful, and highlight key achievements:
+
 Work Experience: ${JSON.stringify(req.body.workExperience)}
-Skills: ${JSON.stringify(req.body.skills)}
 
 Return the response as JSON in this format: { "summary": "generated text here" }`;
 
@@ -83,7 +82,7 @@ Return the response as JSON in this format: { "summary": "generated text here" }
     if (!req.isAuthenticated()) return res.sendStatus(401);
 
     const prompt = `Suggest relevant professional skills based on the following job titles and experience. Return them as a JSON array of strings:
-    
+
 Work Experience: ${JSON.stringify(req.body.workExperience)}
 
 Return the response as JSON in this format: { "skills": ["skill1", "skill2", ...] }`;

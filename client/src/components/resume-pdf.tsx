@@ -1,11 +1,5 @@
-import { Document, Page, Text, View, StyleSheet, Font } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
 import { ResumeContent } from "@shared/schema";
-
-// Register fonts if needed
-// Font.register({
-//   family: 'Montserrat',
-//   src: '/fonts/Montserrat-Regular.ttf'
-// });
 
 // Create styles
 const styles = StyleSheet.create({
@@ -30,6 +24,13 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 20,
   },
+  profilePicture: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -45,6 +46,12 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#6B7280',
     marginBottom: 3,
+  },
+  summary: {
+    fontSize: 11,
+    color: '#4B5563',
+    marginBottom: 15,
+    lineHeight: 1.4,
   },
   sectionTitle: {
     fontSize: 14,
@@ -121,6 +128,12 @@ export function ResumePDF({ content }: { content: ResumeContent }) {
         <View style={styles.leftColumn}>
           {/* Personal Details */}
           <View style={styles.header}>
+            {content.personalDetails.profilePicture && (
+              <Image
+                src={content.personalDetails.profilePicture}
+                style={styles.profilePicture}
+              />
+            )}
             <Text style={styles.name}>{content.personalDetails.fullName}</Text>
             <Text style={styles.contact}>{content.personalDetails.email}</Text>
             <Text style={styles.contact}>{content.personalDetails.phone}</Text>
@@ -145,6 +158,14 @@ export function ResumePDF({ content }: { content: ResumeContent }) {
 
         {/* Right Column */}
         <View style={styles.rightColumn}>
+          {/* Summary */}
+          {content.personalDetails.summary && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Professional Summary</Text>
+              <Text style={styles.summary}>{content.personalDetails.summary}</Text>
+            </View>
+          )}
+
           {/* Work Experience */}
           {content.workExperience.length > 0 && (
             <View style={styles.section}>

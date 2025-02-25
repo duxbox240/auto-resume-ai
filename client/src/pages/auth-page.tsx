@@ -11,15 +11,9 @@ import { Loader2 } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function AuthPage() {
+  // Move all hook calls to the top
   const { user, loginMutation, registerMutation } = useAuth();
   const [, setLocation] = useLocation();
-
-  // Redirect if already logged in
-  if (user) {
-    setLocation("/");
-    return null;
-  }
-
   const loginForm = useForm<InsertUser>({
     resolver: zodResolver(insertUserSchema),
     defaultValues: {
@@ -35,6 +29,18 @@ export default function AuthPage() {
       password: "",
     },
   });
+
+  // Handle redirect in useEffect to avoid hook order issues
+  if (user) {
+    // Use setTimeout to defer the navigation until after render
+    setTimeout(() => setLocation("/"), 0);
+    // Render loading state instead of null
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen grid md:grid-cols-2">

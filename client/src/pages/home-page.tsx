@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Resume } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DashboardNav from "@/components/dashboard-nav";
-import { Plus, Loader2 } from "lucide-react";
+import { ResumePDF } from "@/components/resume-pdf";
+import { Plus, Loader2, Download } from "lucide-react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export default function HomePage() {
   const { data: resumes, isLoading } = useQuery<Resume[]>({
@@ -14,7 +17,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <DashboardNav />
-      
+
       <main className="lg:pl-64">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex justify-between items-center mb-8">
@@ -58,12 +61,26 @@ export default function HomePage() {
                       Last updated: {new Date(resume.updatedAt).toLocaleDateString()}
                     </p>
                     <div className="flex space-x-2">
-                      <Button variant="outline" className="flex-1">
-                        Edit
+                      <Button variant="outline" className="flex-1" asChild>
+                        <Link href={`/resume/${resume.id}/edit`}>Edit</Link>
                       </Button>
-                      <Button variant="outline" className="flex-1">
-                        Preview
+                      <Button variant="outline" className="flex-1" asChild>
+                        <Link href={`/resume/${resume.id}`}>Preview</Link>
                       </Button>
+                      <PDFDownloadLink
+                        document={<ResumePDF content={resume.content} />}
+                        fileName={`${resume.title.toLowerCase().replace(/\s+/g, '-')}.pdf`}
+                      >
+                        {({ loading }) => (
+                          <Button variant="outline">
+                            {loading ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Download className="h-4 w-4" />
+                            )}
+                          </Button>
+                        )}
+                      </PDFDownloadLink>
                     </div>
                   </CardContent>
                 </Card>

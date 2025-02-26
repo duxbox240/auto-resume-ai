@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import DashboardNav from "@/components/dashboard-nav";
 import { ResumePDF } from "@/components/resume-pdf";
+import { ResumePreview } from "@/components/resume-preview";
 import { Download, ChevronLeft, Pencil, Loader2 } from "lucide-react";
-import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export default function ViewResume() {
   const [location] = useLocation();
-  const id = location.split("/").pop();
+  const id = location.split("/")[2]; // Extract ID from /resume/:id
 
   const { data: resume, isLoading, error } = useQuery<Resume>({
     queryKey: [`/api/resumes/${id}`],
@@ -41,7 +42,6 @@ export default function ViewResume() {
     );
   }
 
-  // Ensure content is properly typed as ResumeContent
   const content = resume.content as ResumeContent;
 
   return (
@@ -94,17 +94,8 @@ export default function ViewResume() {
           </div>
 
           <Card className="mb-8">
-            <div className="w-full h-[calc(100vh-16rem)] overflow-hidden rounded-lg">
-              <PDFViewer
-                showToolbar={true}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  border: 'none',
-                }}
-              >
-                <ResumePDF content={content} />
-              </PDFViewer>
+            <div className="overflow-y-auto">
+              <ResumePreview content={content} />
             </div>
           </Card>
         </div>

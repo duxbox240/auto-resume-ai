@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function EditResume() {
   const [location, setLocation] = useLocation();
   const { toast } = useToast();
-  const id = location.split("/").pop();
+  const id = location.split("/")[2]; // Extract ID from /resume/:id/edit
 
   const { data: resume, isLoading } = useQuery<Resume>({
     queryKey: [`/api/resumes/${id}`],

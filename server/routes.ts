@@ -66,14 +66,19 @@ Return the response as JSON in this format: { "summary": "generated text here" }
 
     try {
       const response = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-4",
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
 
+      if (!response.choices[0].message.content) {
+        throw new Error("No content in OpenAI response");
+      }
+
       const result = JSON.parse(response.choices[0].message.content);
       res.json(result);
     } catch (error) {
+      console.error("OpenAI Error:", error);
       res.status(500).json({ error: "Failed to generate summary" });
     }
   });
@@ -89,19 +94,23 @@ Return the response as JSON in this format: { "skills": ["skill1", "skill2", ...
 
     try {
       const response = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-4",
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
 
+      if (!response.choices[0].message.content) {
+        throw new Error("No content in OpenAI response");
+      }
+
       const result = JSON.parse(response.choices[0].message.content);
       res.json(result);
     } catch (error) {
+      console.error("OpenAI Error:", error);
       res.status(500).json({ error: "Failed to suggest skills" });
     }
   });
 
-  // Add this new route after the existing /api/suggestions routes
   app.post("/api/generate-resume", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
 
@@ -109,40 +118,63 @@ Return the response as JSON in this format: { "skills": ["skill1", "skill2", ...
 
     const prompt = `Create a professional resume for a ${jobTitle} with ${yearsOfExperience} years of experience in the ${industry} industry. Include work experience, education, and incorporate these skills: ${skills.join(", ")}.
 
-Return the response as a JSON object matching this TypeScript type:
+Generate the content in a natural, professional style with specific examples and achievements. The response should be a JSON object with this structure:
 {
-  personalDetails: {
-    summary: string;
+  "personalDetails": {
+    "summary": "Professional summary here..."
   },
-  workExperience: Array<{
-    title: string;
-    company: string;
-    location: string;
-    startDate: string;
-    endDate: string;
-    description: string;
-  }>,
-  education: Array<{
-    degree: string;
-    institution: string;
-    location: string;
-    graduationYear: string;
-  }>,
-  skills: string[]
+  "workExperience": [
+    {
+      "title": "Job title",
+      "company": "Company name",
+      "location": "City, Country",
+      "startDate": "YYYY-MM",
+      "endDate": "YYYY-MM",
+      "description": "Detailed job description with achievements"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Degree name",
+      "institution": "Institution name",
+      "location": "City, Country",
+      "graduationYear": "YYYY"
+    }
+  ],
+  "skills": ["Skill 1", "Skill 2", ...]
 }
 
 Make the content realistic and professional, with specific achievements and metrics where appropriate.`;
 
     try {
       const response = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-4",
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
 
+      if (!response.choices[0].message.content) {
+        throw new Error("No content in OpenAI response");
+      }
+
       const generatedContent = JSON.parse(response.choices[0].message.content);
-      res.json(generatedContent);
+
+      // Validate the generated content against our schema
+      const validatedContent = resumeContentSchema.parse({
+        ...generatedContent,
+        personalDetails: {
+          ...generatedContent.personalDetails,
+          fullName: "",
+          email: "",
+          phone: "",
+          location: "",
+          profilePicture: "",
+        }
+      });
+
+      res.json(validatedContent);
     } catch (error) {
+      console.error("OpenAI Error:", error);
       res.status(500).json({ error: "Failed to generate resume content" });
     }
   });

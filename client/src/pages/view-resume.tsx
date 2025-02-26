@@ -12,8 +12,9 @@ export default function ViewResume() {
   const [location] = useLocation();
   const id = location.split("/").pop();
 
-  const { data: resume, isLoading } = useQuery<Resume>({
+  const { data: resume, isLoading, error } = useQuery<Resume>({
     queryKey: [`/api/resumes/${id}`],
+    retry: 1,
   });
 
   if (isLoading) {
@@ -24,15 +25,27 @@ export default function ViewResume() {
     );
   }
 
-  if (!resume) {
-    return <div>Resume not found</div>;
+  if (error || !resume) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Card className="p-6">
+          <h2 className="text-xl font-semibold mb-2">Resume not found</h2>
+          <p className="text-muted-foreground mb-4">
+            The resume you're looking for doesn't exist or has been deleted.
+          </p>
+          <Button asChild>
+            <Link href="/">Back to My Resumes</Link>
+          </Button>
+        </Card>
+      </div>
+    );
   }
 
-  // Type assertion to ensure content matches ResumeContent type
+  // Ensure content is properly typed as ResumeContent
   const content = resume.content as ResumeContent;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <DashboardNav />
 
       <main className="lg:pl-64">
@@ -80,9 +93,16 @@ export default function ViewResume() {
             </div>
           </div>
 
-          <Card className="mb-8 p-4">
-            <div className="w-full h-[calc(100vh-16rem)] border rounded-lg overflow-hidden">
-              <PDFViewer style={{ width: '100%', height: '100%' }}>
+          <Card className="mb-8">
+            <div className="w-full h-[calc(100vh-16rem)] overflow-hidden rounded-lg">
+              <PDFViewer
+                showToolbar={true}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                }}
+              >
                 <ResumePDF content={content} />
               </PDFViewer>
             </div>

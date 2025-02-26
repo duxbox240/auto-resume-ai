@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { Resume, ResumeContent } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -7,7 +7,6 @@ import DashboardNav from "@/components/dashboard-nav";
 import { ResumePDF } from "@/components/resume-pdf";
 import { Download, ChevronLeft, Pencil, Loader2 } from "lucide-react";
 import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
-import { Link } from "wouter";
 
 export default function ViewResume() {
   const [location] = useLocation();
@@ -56,7 +55,7 @@ export default function ViewResume() {
             </div>
             <div className="flex gap-2">
               <Button variant="outline" asChild>
-                <Link href={`/resume/${resume.id}/edit`}>
+                <Link href={`/resume/${id}/edit`}>
                   <Pencil className="h-4 w-4 mr-2" />
                   Edit Resume
                 </Link>

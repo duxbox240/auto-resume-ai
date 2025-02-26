@@ -5,25 +5,39 @@
   "radius": 0.5,
   "colors": {
     "background": "hsl(186, 94%, 94%)",
-    "foreground": "hsl(214, 24%, 19%)",
-    "muted": "hsl(201, 51%, 72%)",
-    "accent": "hsl(12, 84%, 62%)",
-    "card": "hsl(0, 0%, 100%)",
-    "popover": "hsl(0, 0%, 100%)",
+    "foreground": "hsl(293, 24%, 19%)",
+    "muted": {
+      "DEFAULT": "hsl(201, 51%, 72%)",
+      "foreground": "hsl(214, 24%, 19%)"
+    },
+    "accent": {
+      "DEFAULT": "hsl(12, 84%, 62%)",
+      "foreground": "hsl(0, 0%, 100%)"
+    },
+    "card": {
+      "DEFAULT": "hsl(0, 0%, 100%)",
+      "foreground": "hsl(214, 24%, 19%)"
+    },
+    "popover": {
+      "DEFAULT": "hsl(0, 0%, 100%)",
+      "foreground": "hsl(214, 24%, 19%)"
+    },
     "border": "hsl(214, 32%, 91%)",
     "input": "hsl(214, 32%, 91%)",
     "primary": {
       "DEFAULT": "hsl(213, 35%, 37%)",
-      "foreground": "hsl(0, 0%, 100%)"
+      "foreground": "hsl(293, 24%, 21%)"
     },
     "secondary": {
       "DEFAULT": "hsl(201, 51%, 72%)",
-      "foreground": "hsl(214, 24%, 19%)"
+      "foreground": "hsl(98, 76%, 82%)"
     },
     "destructive": {
       "DEFAULT": "hsl(12, 84%, 62%)",
       "foreground": "hsl(0, 0%, 100%)"
     },
+    "muted-foreground": "hsl(201, 51%, 72%)",
+    "accent-foreground": "hsl(12, 84%, 62%)",
     "ring": "hsl(213, 35%, 37%)"
   }
 }

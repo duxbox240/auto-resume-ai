@@ -8,6 +8,8 @@ import { ProtectedRoute } from "./lib/protected-route";
 import HomePage from "@/pages/home-page";
 import AuthPage from "@/pages/auth-page";
 import CreateResume from "@/pages/create-resume";
+import ViewResume from "@/pages/view-resume";
+import EditResume from "@/pages/edit-resume";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -15,6 +17,8 @@ function Router() {
     <Switch>
       <ProtectedRoute path="/" component={HomePage} />
       <ProtectedRoute path="/create" component={CreateResume} />
+      <ProtectedRoute path="/resume/:id" component={ViewResume} />
+      <ProtectedRoute path="/resume/:id/edit" component={EditResume} />
       <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />
     </Switch>

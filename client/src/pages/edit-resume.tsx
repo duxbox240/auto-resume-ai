@@ -1,8 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { Resume, ResumeContent } from "@shared/schema";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import DashboardNav from "@/components/dashboard-nav";
 import ResumeForm from "@/components/resume-form";
 import { ChevronLeft, Loader2 } from "lucide-react";
@@ -59,6 +58,9 @@ export default function EditResume() {
     return <div>Resume not found</div>;
   }
 
+  // Type assertion to ensure content matches ResumeContent type
+  const content = resume.content as ResumeContent;
+
   return (
     <div className="min-h-screen">
       <DashboardNav />
@@ -67,10 +69,10 @@ export default function EditResume() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
             <Button variant="outline" asChild className="mb-4">
-              <a href={`/resume/${id}`}>
+              <Link href={`/resume/${id}`}>
                 <ChevronLeft className="h-4 w-4 mr-2" />
                 Back to Preview
-              </a>
+              </Link>
             </Button>
             <h1 className="text-3xl font-bold mb-2">Edit Resume</h1>
             <p className="text-muted-foreground">
@@ -79,7 +81,7 @@ export default function EditResume() {
           </div>
 
           <ResumeForm
-            defaultValues={resume.content}
+            defaultValues={content}
             onSubmit={(content) => updateResumeMutation.mutate(content)}
             isSubmitting={updateResumeMutation.isPending}
           />

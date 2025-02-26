@@ -97,7 +97,7 @@ export default function OneClickBuilder({
               <FormItem>
                 <FormLabel>Desired Job Title</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="e.g. Senior Software Engineer" />
+                  <Input {...field} placeholder="e.g. Senior Software Engineer" className="text-base sm:text-sm" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -111,7 +111,7 @@ export default function OneClickBuilder({
               <FormItem>
                 <FormLabel>Years of Experience</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="e.g. 5" />
+                  <Input {...field} placeholder="e.g. 5" className="text-base sm:text-sm" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -125,7 +125,7 @@ export default function OneClickBuilder({
               <FormItem>
                 <FormLabel>Industry</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="e.g. Technology" />
+                  <Input {...field} placeholder="e.g. Technology" className="text-base sm:text-sm" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -139,7 +139,11 @@ export default function OneClickBuilder({
               <FormItem>
                 <FormLabel>Key Skills (comma-separated)</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="e.g. JavaScript, React, Node.js" />
+                  <Input 
+                    {...field} 
+                    placeholder="e.g. JavaScript, React, Node.js" 
+                    className="text-base sm:text-sm" 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -148,7 +152,7 @@ export default function OneClickBuilder({
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full text-base sm:text-sm"
             disabled={generateMutation.isPending}
           >
             {generateMutation.isPending ? (
@@ -162,14 +166,14 @@ export default function OneClickBuilder({
       </Form>
 
       <Dialog open={isGenerating} onOpenChange={setIsGenerating}>
-        <DialogContent>
+        <DialogContent aria-describedby="generating-description">
           <DialogHeader>
             <DialogTitle>Generating Your Resume</DialogTitle>
-            <DialogDescription>
-              Please wait while AI generates your professional resume based on the provided information...
+            <DialogDescription id="generating-description">
+              Please wait while AI generates your professional resume based on the provided information. This may take a few moments...
             </DialogDescription>
           </DialogHeader>
-          <div className="flex items-center justify-center py-8">
+          <div className="flex items-center justify-center py-8" role="status" aria-label="Generating resume">
             <Loader2 className="h-8 w-8 animate-spin" />
           </div>
         </DialogContent>

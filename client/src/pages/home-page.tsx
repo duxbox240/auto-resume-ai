@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Resume } from "@shared/schema";
+import { Resume, ResumeContent } from "@shared/schema"; // Assuming ResumeContent type is defined
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DashboardNav from "@/components/dashboard-nav";
 import { ResumePDF } from "@/components/resume-pdf";
-import { Plus, Loader2, Download } from "lucide-react";
+import { Plus, Loader2, Download, Pencil, Eye } from "lucide-react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export default function HomePage() {
@@ -62,13 +62,19 @@ export default function HomePage() {
                     </p>
                     <div className="flex space-x-2">
                       <Button variant="outline" className="flex-1" asChild>
-                        <Link href={`/resume/${resume.id}/edit`}>Edit</Link>
+                        <Link href={`/resume/${resume.id}/edit`}>
+                          <Pencil className="h-4 w-4 mr-2" />
+                          Edit
+                        </Link>
                       </Button>
                       <Button variant="outline" className="flex-1" asChild>
-                        <Link href={`/resume/${resume.id}`}>Preview</Link>
+                        <Link href={`/resume/${resume.id}`}>
+                          <Eye className="h-4 w-4 mr-2" />
+                          Preview
+                        </Link>
                       </Button>
                       <PDFDownloadLink
-                        document={<ResumePDF content={resume.content} />}
+                        document={<ResumePDF content={resume.content as ResumeContent} />}
                         fileName={`${resume.title.toLowerCase().replace(/\s+/g, '-')}.pdf`}
                       >
                         {({ loading }) => (

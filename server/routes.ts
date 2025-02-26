@@ -101,6 +101,52 @@ Return the response as JSON in this format: { "skills": ["skill1", "skill2", ...
     }
   });
 
+  // Add this new route after the existing /api/suggestions routes
+  app.post("/api/generate-resume", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+
+    const { jobTitle, yearsOfExperience, industry, skills } = req.body;
+
+    const prompt = `Create a professional resume for a ${jobTitle} with ${yearsOfExperience} years of experience in the ${industry} industry. Include work experience, education, and incorporate these skills: ${skills.join(", ")}.
+
+Return the response as a JSON object matching this TypeScript type:
+{
+  personalDetails: {
+    summary: string;
+  },
+  workExperience: Array<{
+    title: string;
+    company: string;
+    location: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+  }>,
+  education: Array<{
+    degree: string;
+    institution: string;
+    location: string;
+    graduationYear: string;
+  }>,
+  skills: string[]
+}
+
+Make the content realistic and professional, with specific achievements and metrics where appropriate.`;
+
+    try {
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
+      });
+
+      const generatedContent = JSON.parse(response.choices[0].message.content);
+      res.json(generatedContent);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to generate resume content" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

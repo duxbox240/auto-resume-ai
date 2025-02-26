@@ -4,12 +4,14 @@ import { useMutation } from "@tanstack/react-query";
 import { ResumeContent } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import DashboardNav from "@/components/dashboard-nav";
 import ResumeTemplates from "@/components/resume-templates";
 import ResumeForm from "@/components/resume-form";
+import OneClickBuilder from "@/components/one-click-builder";
 import { useToast } from "@/hooks/use-toast";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function CreateResume() {
   const [, setLocation] = useLocation();
@@ -98,16 +100,41 @@ export default function CreateResume() {
                 Back to Templates
               </Button>
 
-              <ResumeForm
-                onSubmit={(content) => {
-                  createResumeMutation.mutate({
-                    title,
-                    template,
-                    content,
-                  });
-                }}
-                isSubmitting={createResumeMutation.isPending}
-              />
+              <Tabs defaultValue="manual">
+                <TabsList className="grid w-full grid-cols-2 mb-6">
+                  <TabsTrigger value="manual">Fill Manually</TabsTrigger>
+                  <TabsTrigger value="ai">One-Click Builder</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="manual">
+                  <ResumeForm
+                    onSubmit={(content) => {
+                      createResumeMutation.mutate({
+                        title,
+                        template,
+                        content,
+                      });
+                    }}
+                    isSubmitting={createResumeMutation.isPending}
+                  />
+                </TabsContent>
+
+                <TabsContent value="ai">
+                  <Card>
+                    <CardContent className="p-6">
+                      <OneClickBuilder
+                        onComplete={(content) => {
+                          createResumeMutation.mutate({
+                            title,
+                            template,
+                            content,
+                          });
+                        }}
+                      />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
             </div>
           )}
         </div>
